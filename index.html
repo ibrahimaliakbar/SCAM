@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Be My Valentine 💐</title>
+<title>Be My Valentine 💖</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400&display=swap');
@@ -19,12 +19,18 @@ body {
   overflow-x: hidden;
 }
 
+/* Floating animation */
+@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
+
 /* Floating hearts */
 .heart {
   position: fixed;
   bottom: -20px;
-  font-size: 20px;
-  animation: floatUp 8s linear infinite;
+  animation: floatUp 9s linear infinite;
   opacity: 0.6;
 }
 
@@ -33,12 +39,12 @@ body {
   to { transform: translateY(-120vh); }
 }
 
-/* Main card */
+/* Card */
 .card {
-  max-width: 900px;
+  max-width: 950px;
   margin: 60px auto;
-  background: rgba(255,255,255,0.85);
-  border-radius: 30px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 32px;
   padding: 40px;
   text-align: center;
   box-shadow: 0 30px 60px rgba(0,0,0,0.15);
@@ -48,30 +54,30 @@ body {
 
 h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 44px;
-  margin-bottom: 25px;
+  font-size: 46px;
   color: #b30059;
+  margin-bottom: 30px;
 }
 
-/* Photo grid */
+/* Floating gallery */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 15px;
+  gap: 18px;
   margin-bottom: 35px;
 }
 
 .gallery img {
   width: 100%;
-  height: 220px;
+  height: 230px;
   object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-  transition: transform 0.3s ease;
+  border-radius: 22px;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+  animation: float 5s ease-in-out infinite;
 }
 
-.gallery img:hover {
-  transform: scale(1.05);
+.gallery img:nth-child(even) {
+  animation-duration: 6s;
 }
 
 /* Buttons */
@@ -81,7 +87,7 @@ h1 {
 }
 
 button {
-  padding: 16px 34px;
+  padding: 16px 36px;
   font-size: 20px;
   border-radius: 40px;
   border: none;
@@ -92,7 +98,7 @@ button {
 #yes {
   background: linear-gradient(135deg, #ff4d6d, #ff8fa3);
   color: white;
-  box-shadow: 0 10px 25px rgba(255,77,109,0.4);
+  box-shadow: 0 12px 30px rgba(255,77,109,0.45);
 }
 
 #no {
@@ -119,14 +125,14 @@ canvas {
   <h1>WILL YOU BE MY VALENTINE? 💐</h1>
 
   <div class="gallery">
-    <img src="photo1.jpg">
-    <img src="photo2.jpg">
-    <img src="photo3.jpg">
-    <img src="photo4.jpg">
-    <img src="photo5.jpg">
-    <img src="photo6.jpg">
-    <img src="photo7.jpg">
-    <img src="photo8.jpg">
+    <img src="photo1.jpeg">
+    <img src="photo2.jpeg">
+    <img src="photo3.jpeg">
+    <img src="photo4.jpeg">
+    <img src="photo5.jpeg">
+    <img src="photo6.jpeg">
+    <img src="photo7.jpeg">
+    <img src="photo8.jpeg">
   </div>
 
   <div class="buttons">
@@ -136,23 +142,23 @@ canvas {
 </div>
 
 <script>
-/* Floating hearts generator */
-const heartEmojis = ["💖","🌸","💐","🌹","💕"];
+/* Floating hearts */
+const hearts = ["💖","🌸","💐","🌹","💕"];
 setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerText = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 18 + "px";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 8000);
-}, 400);
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerText = hearts[Math.floor(Math.random()*hearts.length)];
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.fontSize = Math.random() * 20 + 18 + "px";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 9000);
+}, 500);
 
 /* No button escape */
 const noBtn = document.getElementById("no");
 noBtn.addEventListener("mouseover", () => {
-  noBtn.style.left = Math.random() * 300 + "px";
-  noBtn.style.top = Math.random() * 80 + "px";
+  noBtn.style.left = Math.random() * 320 + "px";
+  noBtn.style.top = Math.random() * 90 + "px";
 });
 
 /* Confetti */
@@ -165,7 +171,7 @@ function confettiBurst() {
   const pieces = [];
   const colors = ["#ff4d6d","#ffd166","#06d6a0","#f72585","#ff8fa3"];
 
-  for (let i = 0; i < 250; i++) {
+  for (let i = 0; i < 260; i++) {
     pieces.push({
       x: canvas.width / 2,
       y: canvas.height / 2,
@@ -191,23 +197,52 @@ function confettiBurst() {
   animate();
 }
 
-/* Yes click */
+/* YES CLICK → YAYYY PAGE */
 function yesClicked() {
   confettiBurst();
   setTimeout(() => {
     document.body.innerHTML = `
       <div style="
-        height:100vh;
+        min-height:100vh;
+        background:linear-gradient(135deg,#ff4d6d,#ff8fa3);
         display:flex;
+        flex-direction:column;
         align-items:center;
         justify-content:center;
-        background:linear-gradient(135deg,#ff4d6d,#ff8fa3);
+        gap:35px;
         color:white;
         font-family:'Playfair Display',serif;
-        font-size:72px;
-        font-weight:bold;
+        text-align:center;
+        padding:40px;
       ">
-        YAYYY 💖💐
+        <div style="font-size:76px; font-weight:bold;">
+          YAYYY 💖
+        </div>
+
+        <div style="
+          display:flex;
+          gap:30px;
+          flex-wrap:wrap;
+          justify-content:center;
+        ">
+          <img src="photo9.jpg" style="
+            width:280px;
+            height:380px;
+            object-fit:cover;
+            border-radius:26px;
+            box-shadow:0 18px 35px rgba(0,0,0,0.35);
+            animation: float 5s ease-in-out infinite;
+          ">
+
+          <img src="photo10.jpg" style="
+            width:280px;
+            height:380px;
+            object-fit:cover;
+            border-radius:26px;
+            box-shadow:0 18px 35px rgba(0,0,0,0.35);
+            animation: float 6s ease-in-out infinite;
+          ">
+        </div>
       </div>
     `;
   }, 1200);
