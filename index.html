@@ -1,163 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Be My Valentine 💖</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Georgia', serif;
-    }
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-      overflow: hidden;
-    }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400&display=swap');
 
-    .page {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
+* { box-sizing: border-box; }
 
-    h1 {
-      font-size: 3rem;
-      color: #7a1c3a;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #ffe4ec, #fff7f9);
+  overflow-x: hidden;
+}
 
-    .buttons {
-      position: relative;
-      margin-top: 20px;
-    }
+/* Floating animation */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+  100% { transform: translateY(0); }
+}
 
-    button {
-      font-size: 1.2rem;
-      padding: 12px 28px;
-      margin: 10px;
-      border-radius: 30px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
+/* Floating hearts & flowers */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  animation: rise 10s linear infinite;
+  opacity: 0.5;
+}
 
-    #yes {
-      background: #ff4d6d;
-      color: white;
-    }
+@keyframes rise {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120vh); }
+}
 
-    #no {
-      background: #fff;
-      color: #ff4d6d;
-      position: absolute;
-    }
+/* Card */
+.card {
+  max-width: 960px;
+  margin: 60px auto;
+  background: rgba(255,255,255,0.92);
+  border-radius: 36px;
+  padding: 42px;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.14);
+  position: relative;
+  z-index: 2;
+}
 
-    /* Floating photos */
-    .photos {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 46px;
+  color: #a8004f;
+  margin-bottom: 28px;
+}
 
-    .photos img {
-      position: absolute;
-      width: 120px;
-      border-radius: 15px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.25);
-      animation: float 6s ease-in-out infinite;
-    }
+/* Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+  margin-bottom: 36px;
+}
 
-    .photos img:nth-child(even) {
-      animation-duration: 8s;
-    }
+.gallery img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 22px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+  animation: float 5s ease-in-out infinite;
+}
 
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-25px); }
-      100% { transform: translateY(0px); }
-    }
+.gallery img:nth-child(even) {
+  animation-duration: 6.5s;
+}
 
-    /* YAY page */
-    #yayPage {
-      display: none;
-    }
+/* Buttons */
+.buttons {
+  position: relative;
+  height: 120px;
+}
 
-    #yayPage h1 {
-      font-size: 4rem;
-      color: #ff2f6e;
-    }
+button {
+  padding: 16px 38px;
+  font-size: 20px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
 
-    .subtitle {
-      font-size: 1.3rem;
-      color: #7a1c3a;
-      margin-top: 10px;
-    }
-  </style>
+#yes {
+  background: linear-gradient(135deg, #ff5c8a, #ff9bb5);
+  color: white;
+  box-shadow: 0 14px 30px rgba(255,92,138,0.45);
+}
+
+#no {
+  background: #aaa;
+  color: white;
+  position: absolute;
+}
+
+/* Confetti */
+canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+</style>
 </head>
+
 <body>
 
-<!-- FRONT PAGE -->
-<div class="page" id="mainPage">
-  <h1>Will you be my Valentine? 🌹</h1>
+<canvas id="confetti"></canvas>
+
+<div class="card">
+  <h1>WILL YOU BE MY VALENTINE? 💐</h1>
+
+  <div class="gallery">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+    <img src="photo4.jpg">
+    <img src="photo5.jpg">
+    <img src="photo6.jpg">
+    <img src="photo7.jpg">
+    <img src="photo8.jpg">
+  </div>
 
   <div class="buttons">
-    <button id="yes">Yes 💖</button>
+    <button id="yes" onclick="yesClicked()">Yes 💖</button>
     <button id="no">No</button>
   </div>
-
-  <div class="photos">
-    <img src="photo1.jpg" style="top:5%; left:8%;">
-    <img src="photo2.jpg" style="top:15%; right:10%;">
-    <img src="photo3.jpg" style="bottom:10%; left:12%;">
-    <img src="photo4.jpg" style="bottom:18%; right:14%;">
-    <img src="photo5.jpg" style="top:35%; left:3%;">
-    <img src="photo6.jpg" style="top:40%; right:4%;">
-    <img src="photo7.jpg" style="bottom:35%; left:6%;">
-    <img src="photo8.jpg" style="bottom:40%; right:6%;">
-  </div>
 </div>
-
-<!-- YAY PAGE -->
-<div class="page" id="yayPage">
-  <h1>YAYYY 💕🎉</h1>
-  <div class="subtitle">I knew it would always be you.</div>
-
-  <div class="photos">
-    <img src="photo9.jpg" style="top:20%; left:25%;">
-    <img src="photo10.jpg" style="top:20%; right:25%;">
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-  const noBtn = document.getElementById("no");
-  const yesBtn = document.getElementById("yes");
+/* Floating emojis */
+const emojis = ["💖","🌸","💐","🌹","💕"];
+setInterval(() => {
+  const e = document.createElement("div");
+  e.className = "heart";
+  e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+  e.style.left = Math.random() * 100 + "vw";
+  e.style.fontSize = Math.random() * 22 + 16 + "px";
+  document.body.appendChild(e);
+  setTimeout(() => e.remove(), 10000);
+}, 600);
 
-  noBtn.addEventListener("mouseenter", () => {
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-  });
+/* No button escape */
+const noBtn = document.getElementById("no");
+noBtn.addEventListener("mouseover", () => {
+  noBtn.style.left = Math.random() * 320 + "px";
+  noBtn.style.top = Math.random() * 90 + "px";
+});
 
-  yesBtn.addEventListener("click", () => {
-    document.getElementById("mainPage").style.display = "none";
-    document.getElementById("yayPage").style.display = "flex";
+/* Confetti */
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-    confetti({
-      particleCount: 180,
-      spread: 80,
-      origin: { y: 0.6 }
+function confettiBurst() {
+  const pieces = [];
+  const colors = ["#ff5c8a","#ffd1dc","#ffb3c6","#f72585","#ffc8dd"];
+
+  for (let i = 0; i < 260; i++) {
+    pieces.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      size: Math.random() * 6 + 4,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      vx: (Math.random() - 0.5) * 10,
+      vy: (Math.random() - 0.7) * 10,
+      gravity: 0.35
     });
-  });
+  }
+
+  function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.gravity;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size);
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+/* YES → YAYYY PAGE */
+function yesClicked() {
+  confettiBurst();
+  setTimeout(() => {
+    document.body.innerHTML = `
+      <div style="
+        min-height:100vh;
+        background:linear-gradient(135deg,#ff5c8a,#ff9bb5);
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:28px;
+        color:white;
+        font-family:'Playfair Display',serif;
+        text-align:center;
+        padding:40px;
+      ">
+        <div style="font-size:78px; font-weight:bold;">
+          YAYYY 💖
+        </div>
+
+        <div style="
+          font-size:22px;
+          font-family:'Poppins',sans-serif;
+          opacity:0.95;
+        ">
+          I knew it would always be you.
+        </div>
+
+        <div style="
+          display:flex;
+          gap:30px;
+          flex-wrap:wrap;
+          justify-content:center;
+        ">
+          <img src="photo9.jpg" style="
+            width:280px;
+            height:380px;
+            object-fit:cover;
+            border-radius:28px;
+            box-shadow:0 18px 40px rgba(0,0,0,0.35);
+            animation: float 5s ease-in-out infinite;
+          ">
+
+          <img src="photo10.jpg" style="
+            width:280px;
+            height:380px;
+            object-fit:cover;
+            border-radius:28px;
+            box-shadow:0 18px 40px rgba(0,0,0,0.35);
+            animation: float 6.5s ease-in-out infinite;
+          ">
+        </div>
+
+        <div style="
+          font-size:12px;
+          opacity:0.35;
+          margin-top:10px;
+        ">
+          always & quietly.
+        </div>
+      </div>
+    `;
+  }, 1200);
+}
 </script>
 
 </body>
