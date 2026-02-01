@@ -7,9 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400&display=swap');
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -21,8 +19,8 @@ body {
 
 /* Floating animation */
 @keyframes float {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-15px); }
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
   100% { transform: translateY(0); }
 }
 
@@ -59,7 +57,7 @@ h1 {
   margin-bottom: 30px;
 }
 
-/* Floating gallery */
+/* Gallery */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -125,14 +123,14 @@ canvas {
   <h1>WILL YOU BE MY VALENTINE? 💐</h1>
 
   <div class="gallery">
-    <img src="photo1.jpeg">
-    <img src="photo2.jpeg">
-    <img src="photo3.jpeg">
-    <img src="photo4.jpeg">
-    <img src="photo5.jpeg">
-    <img src="photo6.jpeg">
-    <img src="photo7.jpeg">
-    <img src="photo8.jpeg">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+    <img src="photo4.jpg">
+    <img src="photo5.jpg">
+    <img src="photo6.jpg">
+    <img src="photo7.jpg">
+    <img src="photo8.jpg">
   </div>
 
   <div class="buttons">
@@ -147,7 +145,7 @@ const hearts = ["💖","🌸","💐","🌹","💕"];
 setInterval(() => {
   const h = document.createElement("div");
   h.className = "heart";
-  h.innerText = hearts[Math.floor(Math.random()*hearts.length)];
+  h.innerText = hearts[Math.floor(Math.random() * hearts.length)];
   h.style.left = Math.random() * 100 + "vw";
   h.style.fontSize = Math.random() * 20 + 18 + "px";
   document.body.appendChild(h);
@@ -176,7 +174,7 @@ function confettiBurst() {
       x: canvas.width / 2,
       y: canvas.height / 2,
       size: Math.random() * 6 + 4,
-      color: colors[Math.floor(Math.random()*colors.length)],
+      color: colors[Math.floor(Math.random() * colors.length)],
       vx: (Math.random() - 0.5) * 10,
       vy: (Math.random() - 0.7) * 10,
       gravity: 0.35
@@ -184,7 +182,7 @@ function confettiBurst() {
   }
 
   function animate() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     pieces.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
@@ -197,7 +195,7 @@ function confettiBurst() {
   animate();
 }
 
-/* YES CLICK → YAYYY PAGE */
+/* YES → YAYYY PAGE */
 function yesClicked() {
   confettiBurst();
   setTimeout(() => {
